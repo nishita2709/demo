@@ -1,4 +1,24 @@
+import { useRef, useState } from "react";
+
 export default function BrothersDayPage() {
+  const audioRef = useRef(null);
+  const [openAlbum, setOpenAlbum] = useState(false);
+
+  const playSong = () => {
+    audioRef.current.play();
+  };
+
+  const photos = [
+  "/photos/one.jpg",
+  "/photos/two.jpg",
+  "/photos/three.jpg",
+  "/photos/four.jpg",
+  "/photos/five.jpg",
+  "/photos/six.jpg",
+  "/photos/seven.jpg",
+  "/photos/eight.jpg",
+];
+
   return (
     <div className="min-h-screen bg-[#f6f1eb] flex items-center justify-center p-6">
       <div className="w-full max-w-md bg-[#fffaf5] rounded-[32px] shadow-2xl border border-pink-100 p-8 relative overflow-hidden">
@@ -22,10 +42,8 @@ export default function BrothersDayPage() {
           </div>
 
           <p className="text-gray-500 leading-8 text-[17px] px-2">
-            Today is yours. A little corner of the internet — built just to
-            say thanks for every fight we laughed about later, every secret we
-            kept, and every time you had my back. Stay a while, big/little
-            brother.
+            Today is yours. A little corner of the internet built just to say
+            thanks for every memory.
           </p>
 
           <div className="mt-12 bg-[#fff1ee] rounded-3xl p-5 shadow-inner border border-pink-100">
@@ -35,13 +53,19 @@ export default function BrothersDayPage() {
               </div>
 
               <div className="flex-1 text-left">
-                <h3 className="font-serif text-2xl text-gray-700">Ashiyan</h3>
+                <h3 className="font-serif text-2xl text-gray-700">
+                  Ashiyan
+                </h3>
+
                 <p className="uppercase text-[11px] tracking-[0.25em] text-gray-400 mt-1">
                   A track for you
                 </p>
               </div>
 
-              <button className="w-12 h-12 rounded-full bg-pink-300 text-white text-lg shadow-lg hover:scale-105 transition">
+              <button
+                onClick={playSong}
+                className="w-12 h-12 rounded-full bg-pink-300 text-white text-lg shadow-lg hover:scale-105 transition"
+              >
                 ▶
               </button>
             </div>
@@ -50,11 +74,6 @@ export default function BrothersDayPage() {
               <div className="w-full h-2 rounded-full bg-pink-100 overflow-hidden">
                 <div className="w-1/3 h-full bg-pink-300 rounded-full" />
               </div>
-
-              <div className="flex justify-between text-xs text-gray-400 mt-2">
-                <span>0:02</span>
-                <span>2:51</span>
-              </div>
             </div>
           </div>
 
@@ -62,10 +81,45 @@ export default function BrothersDayPage() {
             press play — this one always reminds me of you
           </p>
 
-          <button className="mt-10 bg-[#b8d4ff] hover:bg-[#a8c8fa] transition text-white px-8 py-4 rounded-2xl shadow-lg tracking-wide text-sm uppercase">
+          <button
+            onClick={() => setOpenAlbum(true)}
+            className="mt-10 bg-[#b8d4ff] hover:bg-[#a8c8fa] transition text-white px-8 py-4 rounded-2xl shadow-lg tracking-wide text-sm uppercase"
+          >
             See Our Album →
           </button>
         </div>
+
+        <audio ref={audioRef}>
+          <source src="/song.mp3" type="audio/mp3" />
+        </audio>
+
+        {openAlbum && (
+          <div className="fixed inset-0 bg-black/70 z-50 flex items-center justify-center p-6">
+            <div className="bg-white rounded-3xl p-5 max-w-4xl w-full relative">
+              <button
+                onClick={() => setOpenAlbum(false)}
+                className="absolute top-4 right-4 text-2xl"
+              >
+                ✕
+              </button>
+
+              <h2 className="text-3xl font-serif text-center mb-6">
+                Our Memories
+              </h2>
+
+              <div className="grid grid-cols-2 gap-4">
+                {photos.map((photo, index) => (
+                  <img
+                    key={index}
+                    src={photo}
+                    alt=""
+                    className="rounded-2xl h-52 w-full object-cover shadow-lg"
+                  />
+                ))}
+              </div>
+            </div>
+          </div>
+        )}
 
         <div className="absolute -top-12 -right-12 w-40 h-40 bg-pink-100 rounded-full blur-3xl opacity-60" />
         <div className="absolute -bottom-12 -left-12 w-40 h-40 bg-blue-100 rounded-full blur-3xl opacity-60" />
